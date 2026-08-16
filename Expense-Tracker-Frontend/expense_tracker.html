@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <h1>Expense Tracker</h1>
+            <button class="logout-button" id="logoutBtn">Logout</button>
+        </div>
+
+        <!-- Summary Cards Grid -->
+        <div class="summary-cards">
+            <div class="card balance-card">
+                <h3>Your Balance</h3>
+                <p id="balance">$0.00</p>
+            </div>
+            <div class="card income-card">
+                <h3>Total Income</h3>
+                <p id="income">$0.00</p>
+            </div>
+            <div class="card expense-card">
+                <h3>Total Expenses</h3>
+                <p id="expense">$0.00</p>
+            </div>
+            <div class="card count-card">
+                <h3>Transactions</h3>
+                <p id="transaction-count">0</p>
+            </div>
+        </div>
+
+        <!-- Monthly Budget Section -->
+        <div class="budget-section">
+            <div class="budget-header">
+                <h3>Monthly Budget</h3>
+                <div class="budget-month-picker">
+                    <input type="month" id="budget-month-input">
+                </div>
+            </div>
+            <div id="budget-content">
+                <p class="empty-msg">Select a month to view budget.</p>
+            </div>
+        </div>
+
+        <!-- Analytics Visual Section -->
+        <div class="analytics-section">
+            <div class="analytics-card">
+                <h3>Category Spending</h3>
+                <div id="category-bars" class="bar-container">
+                    <p class="empty-msg">No expense data recorded.</p>
+                </div>
+            </div>
+            <div class="analytics-card">
+                <h3>Monthly Spending Trend</h3>
+                <div id="monthly-bars" class="bar-container">
+                    <p class="empty-msg">No historical trend data.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transaction Form -->
+        <div class="form">
+            <h3 id="form-title">Add Transaction</h3>
+            <div class="form-control">
+                <label for="text">Description</label>
+                <input type="text" id="text" placeholder="Enter description">
+            </div>
+            <div class="form-control">
+                <label for="amount">Amount <small>(negative - expense, positive - income)</small></label>
+                <input type="text" id="amount" placeholder="Enter amount">
+            </div>
+            <div class="form-control">
+                <label for="category">Category</label>
+                <select id="category">
+                    <option value="FOOD">Food</option>
+                    <option value="TRANSPORT">Transport</option>
+                    <option value="SHOPPING">Shopping</option>
+                    <option value="BILLS">Bills</option>
+                    <option value="EDUCATION">Education</option>
+                    <option value="ENTERTAINMENT">Entertainment</option>
+                    <option value="HEALTH">Health</option>
+                    <option value="OTHER" selected>Other</option>
+                </select>
+            </div>
+            <div class="button-group">
+                <button class="btn" id="add-transaction">Add Transaction</button>
+                <button class="btn btn-cancel" id="cancel-edit" style="display: none;">Cancel Edit</button>
+            </div>
+        </div>
+
+        <!-- Filter & Search Section -->
+        <div class="filter-section">
+            <h3>Filter & Search Transactions</h3>
+            <div class="filter-grid">
+                <div class="form-control">
+                    <label for="filter-search">Search Description</label>
+                    <input type="text" id="filter-search" placeholder="Search keywords...">
+                </div>
+                <div class="form-control">
+                    <label for="filter-type">Type</label>
+                    <select id="filter-type">
+                        <option value="ALL">All Types</option>
+                        <option value="INCOME">Income</option>
+                        <option value="EXPENSE">Expense</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label for="filter-category">Category</label>
+                    <select id="filter-category">
+                        <option value="ALL">All Categories</option>
+                        <option value="FOOD">Food</option>
+                        <option value="TRANSPORT">Transport</option>
+                        <option value="SHOPPING">Shopping</option>
+                        <option value="BILLS">Bills</option>
+                        <option value="EDUCATION">Education</option>
+                        <option value="ENTERTAINMENT">Entertainment</option>
+                        <option value="HEALTH">Health</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label for="filter-start-date">Start Date</label>
+                    <input type="date" id="filter-start-date">
+                </div>
+                <div class="form-control">
+                    <label for="filter-end-date">End Date</label>
+                    <input type="date" id="filter-end-date">
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn" id="apply-filters">Apply Filters</button>
+                <button class="btn btn-cancel" id="clear-filters">Clear Filters</button>
+            </div>
+        </div>
+
+        <!-- History Table Section -->
+        <div class="history">
+            <h3>Recent Transactions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="list"></tbody>
+            </table>
+            <div class="pagination-controls">
+                <button class="btn btn-sm" id="prev-page" disabled>Previous</button>
+                <span id="page-info">Page 1 of 1</span>
+                <button class="btn btn-sm" id="next-page" disabled>Next</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

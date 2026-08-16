@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Expense Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="auth-body">
+  <div class="container auth-container">
+    <h1>Login</h1>
+    <form class="form" id="login-form">
+      <div class="form-control">
+        <label for="username">Username</label>
+        <input type="text" id="username" placeholder="Enter your username" autocomplete="username">
+      </div>
+      <div class="form-control">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn" id="login-btn">Login</button>
+      <a href="register.html" class="auth-link">Don't have an account? Register</a>
+    </form>
+  </div>
+
+  <script>
+    const API_BASE_URL = "http://localhost:8080/ExpTrack";
+
+    const storedToken = sessionStorage.getItem("token");
+    if (storedToken) {
+      window.location.href = "expense_tracker.html";
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!username || !password) {
+        alert('Please enter both username and password.');
+        return;
+      }
+
+      const credentials = { username, password };
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(credentials)
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          alert(errorData.message || "Invalid username or password");
+          return;
+        }
+
+        const data = await response.json();
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("user", data.username);
+        window.location.href = "expense_tracker.html";
+      } catch (error) {
+        alert("Login failed: " + error.message);
+      }
+    });
+  </script>
+</body>
+
+</html>
